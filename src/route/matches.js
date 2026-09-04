@@ -60,6 +60,12 @@ router.post("/", async (req, res) => {
       })
       .returning();
 
+    try {
+      res.app.locals.broadcastMatchCreated?.(event);
+    } catch (e) {
+      console.error("Failed to broadcast match_created event:", e);
+    }
+
     res
       .status(201)
       .json({ message: "Match created successfully", data: event });
