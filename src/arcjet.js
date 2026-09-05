@@ -7,7 +7,7 @@ if (!arcjetKey)
   throw new Error("ARCJET_KEY is not set in environment variables");
 
 export const httpArcjet = arcjetKey
-  ? new arcjet({
+  ? arcjet({
       key: arcjetKey,
       rules: [
         shield({
