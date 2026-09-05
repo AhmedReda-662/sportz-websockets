@@ -27,7 +27,7 @@ export function attachWebSocketServer(server) {
     if (wsArcjet) {
       try {
         const decision = await wsArcjet.protect(req);
-        if (decision.isDenied) {
+        if (decision.isDenied()) {
           const code = decision.reason.isRateLimit() ? 1013 : 1008;
           const reason = decision.reason.isRateLimit()
             ? "Rate limit exceeded"
