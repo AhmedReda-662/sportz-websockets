@@ -1,6 +1,7 @@
 import http from "http";
 import express from "express";
 import { router as matchesRouter } from "./route/matches.js";
+import { router as commentaryRouter } from "./route/commentry.js";
 import { attachWebSocketServer } from "./ws/server.js";
 import { securityMiddleware } from "./arcjet.js";
 
@@ -14,12 +15,16 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.use(securityMiddleware());
+// app.use(securityMiddleware());
 
 app.use("/matches", matchesRouter);
+app.use("/matches/:id/commentary", commentaryRouter);
 
-const { broadcastMatchCreated } = attachWebSocketServer(server);
+const { broadcastMatchCreated, brodcastMatchCommentry } =
+  attachWebSocketServer(server);
+
 app.locals.broadcastMatchCreated = broadcastMatchCreated;
+app.locals.brodcastMatchCommentry = brodcastMatchCommentry;
 
 server.listen(PORT, HOST, () => {
   const baseURL =
